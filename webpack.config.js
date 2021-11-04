@@ -4,7 +4,7 @@ const port = process.env.PORT || 3000;
 
 module.exports = {
   entry: {
-    'js/app': ['./src/App.jsx'],
+    'js/app': ['./src/index.js'],
   },
   devServer: { port: port },
   output: {
