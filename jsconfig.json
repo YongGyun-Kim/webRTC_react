@@ -1,0 +1,9 @@
+{
+  "compilerOptions": { "baseUrl": "." },
+  "paths": {
+    "container": "./src/container/*",
+    "hook": "./src/hook/*",
+    "presenter": "./src/presenter/*",
+    "lib": "./lib/*"
+  }
+}
