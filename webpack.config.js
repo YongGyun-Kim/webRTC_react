@@ -11,6 +11,15 @@ module.exports = {
     path: path.resolve(__dirname, 'dist/'),
     publicPath: '/',
   },
+  resolve: {
+    alias: {
+      src: path.resolve(__dirname, 'src'),
+      container: path.resolve(__dirname, 'src/container'),
+      hook: path.resolve(__dirname, 'src/hook'),
+      lib: path.resolve(__dirname, 'lib'),
+      presenter: path.resolve(__dirname, 'src/presenter'),
+    },
+  },
   module: {
     rules: [
       {
