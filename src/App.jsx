@@ -19,7 +19,18 @@ import { io } from 'socket.io-client';
 function App() {
   const [socket, setSocket] = useState('');
   useEffect(() => {
-    setSocket(io.connect('http://localhost:8000'));
+    // aws
+    const location = window.location;
+    const tempSocket = io(
+      location.protocol + '//' + location.hostname + ':8000',
+    );
+
+    tempSocket.on('matching', data => {
+      console.log(data.id);
+      console.log(data.nickName);
+    });
+
+    setSocket(tempSocket);
   }, []);
 
   return (

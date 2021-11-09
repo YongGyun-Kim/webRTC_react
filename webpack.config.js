@@ -19,6 +19,7 @@ module.exports = {
       lib: path.resolve(__dirname, 'lib'),
       presenter: path.resolve(__dirname, 'src/presenter'),
     },
+    extensions: ['.jsx', '.js', '.json'],
   },
   module: {
     rules: [
