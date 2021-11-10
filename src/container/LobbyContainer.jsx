@@ -6,22 +6,24 @@ import { useNavigate } from 'react-router';
 const LobbyContainer = ({ socket }) => {
   /***/
   const [nickName, setNickName] = useInput('');
-  const history = useNavigate();
+  const navigate = useNavigate();
 
-  const Join = () => {
+  const join = () => {
     socket.emit(QUEUE_REGISTRATION, nickName);
+    navigate('/room');
   };
 
   return (
     <>
       <div>
+        <h2>online users : 0</h2>
         <input
           type="text"
           placeholder="NickName"
           onChange={setNickName}
           value={nickName}
         />
-        <button onClick={Join}>Join</button>
+        <button onClick={join}>Join</button>
       </div>
     </>
   );

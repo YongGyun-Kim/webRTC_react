@@ -1,18 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
-/***********************************************/
 import VideocamOffOutlinedIcon from '@material-ui/icons/VideocamOffOutlined';
 import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
 import MicOutlinedIcon from '@material-ui/icons/MicOutlined';
 import MicOffOutlinedIcon from '@material-ui/icons/MicOffOutlined';
 import VolumeUpOutlinedIcon from '@material-ui/icons/VolumeUpOutlined';
 import VolumeOffOutlinedIcon from '@material-ui/icons/VolumeOffOutlined';
-/***********************************************/
 
-const RoomContainer = () => {
+const RoomContainer = ({ socket }) => {
+  const [peerFace, setPeerFace] = useState('');
+  const [stream, setStream] = useState();
+  const myVideo = useRef();
+  const userVideo = useRef();
+  const [myPeerConnection, setMyPeerConnection] = useState(
+    new RTCPeerConnection({
+      iceServers: [
+        {
+          urls: [
+            'stun:stun.l.google.com:19302',
+            'stun:stun1.l.google.com:19302',
+            'stun:stun2.l.google.com:19302',
+            'stun:stun3.l.google.com:19302',
+            'stun:stun4.l.google.com:19302',
+          ],
+        },
+      ],
+    }),
+  );
+
+  useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: false })
+      .then(stream => {
+        setStream(stream);
+        myVideo.current.srcObject = stream;
+      });
+  }, []);
+
   return (
     <div>
-      <h2>online users : 0</h2>
       <div style={{ display: 'flex' }}>
         <div id="videoArea" style={{ border: '1px solid red' }}>
           <div
@@ -21,9 +47,10 @@ const RoomContainer = () => {
           >
             <div>my nick</div>
             <video
-              autoplay
-              playsinline
+              autoPlay
+              playsInline
               style={{ width: '400px', height: '400px' }}
+              ref={myVideo}
             />
             <div
               style={{ display: 'flex', position: 'absolute', bottom: '5px' }}
@@ -37,9 +64,10 @@ const RoomContainer = () => {
           >
             <div>other nick</div>
             <video
-              autoplay
-              playsinline
+              autoPlay
+              playsInline
               style={{ width: '400px', height: '400px' }}
+              ref={userVideo}
             />
             <div
               style={{ display: 'flex', position: 'absolute', bottom: '5px' }}
