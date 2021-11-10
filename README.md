@@ -1,2 +1,1 @@
-https://ui.toast.com/weekly-pick/ko_20160812
-https://github.com/webrtc/samples
+커피챗 진행중 나온 이야기를 토대로 1대1 랜덤 매칭 서비스를 만들어보자!
