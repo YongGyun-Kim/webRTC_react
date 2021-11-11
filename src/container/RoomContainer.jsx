@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 
+import socket from 'util/socket';
+import myPeerConnection from 'util/rtcConnect';
+
 import VideocamOffOutlinedIcon from '@material-ui/icons/VideocamOffOutlined';
 import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
 import MicOutlinedIcon from '@material-ui/icons/MicOutlined';
@@ -7,26 +10,11 @@ import MicOffOutlinedIcon from '@material-ui/icons/MicOffOutlined';
 import VolumeUpOutlinedIcon from '@material-ui/icons/VolumeUpOutlined';
 import VolumeOffOutlinedIcon from '@material-ui/icons/VolumeOffOutlined';
 
-const RoomContainer = ({ socket }) => {
+const RoomContainer = () => {
   const [peerFace, setPeerFace] = useState('');
   const [stream, setStream] = useState();
   const myVideo = useRef();
   const userVideo = useRef();
-  const [myPeerConnection, setMyPeerConnection] = useState(
-    new RTCPeerConnection({
-      iceServers: [
-        {
-          urls: [
-            'stun:stun.l.google.com:19302',
-            'stun:stun1.l.google.com:19302',
-            'stun:stun2.l.google.com:19302',
-            'stun:stun3.l.google.com:19302',
-            'stun:stun4.l.google.com:19302',
-          ],
-        },
-      ],
-    }),
-  );
 
   useEffect(() => {
     navigator.mediaDevices
@@ -35,6 +23,22 @@ const RoomContainer = ({ socket }) => {
         setStream(stream);
         myVideo.current.srcObject = stream;
       });
+
+    socket.on('matching', data => {
+      console.log('id : ', data.id);
+      console.log('nickName : ', data.nickName);
+
+      myPeerConnection.addEventListener('icecandidate', data => {
+        // socket.emit("")
+      });
+      myPeerConnection.addEventListener('addstream', data => {
+        userVideo.current.srcObject = data.stream;
+      });
+      stream
+        .getTracks()
+        .forEach(track => myPeerConnection.addTrack(track, stream));
+      // peer ㅅㅓㄹ저ㅇ
+    });
   }, []);
 
   return (

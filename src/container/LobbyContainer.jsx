@@ -2,8 +2,9 @@ import React from 'react';
 import useInput from 'hook/useInput';
 import { QUEUE_REGISTRATION } from 'lib/events.js';
 import { useNavigate } from 'react-router';
+import socket from 'util/socket';
 
-const LobbyContainer = ({ socket }) => {
+const LobbyContainer = () => {
   /***/
   const [nickName, setNickName] = useInput('');
   const navigate = useNavigate();

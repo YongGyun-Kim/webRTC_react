@@ -4,6 +4,7 @@
     "container": "./src/container/*",
     "hook": "./src/hook/*",
     "presenter": "./src/presenter/*",
-    "lib": "./lib/*"
+    "lib": "./lib/*",
+    "util": "./src/util/*"
   }
 }
